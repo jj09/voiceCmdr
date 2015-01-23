@@ -1,0 +1,30 @@
+{
+  "name": "voice-cmdr",
+  "version": "0.1.0",
+  "homepage": "https://github.com/jj09/voiceCmdr",
+  "authors": [
+    "Jakub Jedryszek <jakub.jedryszek@gmail.com>"
+  ],
+  "description": "voiceCmdr is a library for adding voice commands to your website. It is build on top of Webkit Speach API.",
+  "main": "src/voiceCmdr.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "speach",
+    "recognition",
+    "web",
+    "speach",
+    "api",
+    "voice",
+    "commands"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
