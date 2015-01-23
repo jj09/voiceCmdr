@@ -5,16 +5,16 @@
   "authors": [
     "Jakub Jedryszek <jakub.jedryszek@gmail.com>"
   ],
-  "description": "voiceCmdr is a library for adding voice commands to your website. It is build on top of Webkit Speach API.",
+  "description": "voiceCmdr is a library for adding voice commands to your website. It is build on top of Webkit Speech API.",
   "main": "src/voiceCmdr.js",
   "moduleType": [
     "globals"
   ],
   "keywords": [
-    "speach",
+    "speech",
     "recognition",
     "web",
-    "speach",
+    "speech",
     "api",
     "voice",
     "commands"

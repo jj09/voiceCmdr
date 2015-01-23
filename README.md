@@ -1,5 +1,5 @@
 # voiceCmdr
-voiceCmdr is a library for adding voice commands to your website. It is build on top of Webkit Speach API.
+voiceCmdr is a library for adding voice commands to your website. It is build on top of Webkit Speech API.
 
 ## Browser support
 
