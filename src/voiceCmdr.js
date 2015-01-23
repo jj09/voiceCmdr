@@ -8,23 +8,23 @@
 
 /*jshint unused:false*/
 var voiceCmdr = (function () {
-    var self = this;
+    var that = this;
 
     // API
 
     // register command, and its callback function
     this.addCommand = function (command, f) {
-        if (self.DEBUG) console.debug("added command:", command);
-        self.commands[command] = f;
+        if (that.DEBUG) console.debug("added command:", command);
+        that.commands[command] = f;
     };
 
     // remove command
     // @return if command exists: true
     //         else: return false
     this.removeCommand = function (command) {
-        if (self.DEBUG) console.debug("removed command:", command);
-        if (self.commands[command]) {
-            delete self.commands[command];
+        if (that.DEBUG) console.debug("removed command:", command);
+        if (that.commands[command]) {
+            delete that.commands[command];
             return true;
         }
 
@@ -33,27 +33,27 @@ var voiceCmdr = (function () {
 
     // start listening for commands
     this.start = function () {
-        self.recognition.continuous = true;
-        self.recognition.start();
-        if (self.DEBUG) console.debug("started listening");
+        that.recognition.continuous = true;
+        that.recognition.start();
+        if (that.DEBUG) console.debug("started listening");
     };
 
     // stop listening for commands
     this.stop = function() {
-        self.recognition.continuous = false;
-        self.recognition.stop();
-        if (self.DEBUG) console.debug("stopped listening");
+        that.recognition.continuous = false;
+        that.recognition.stop();
+        if (that.DEBUG) console.debug("stopped listening");
     };
 
     // listening for single command
     this.getCommand = function() {
-        self.recognition.continuous = false;
-        self.recognition.start();
-        if (self.DEBUG) console.debug("listening for single command");
+        that.recognition.continuous = false;
+        that.recognition.start();
+        if (that.DEBUG) console.debug("listening for single command");
     };
 
     this.debug = function(mode) {
-        self.DEBUG = !!mode;
+        that.DEBUG = !!mode;
     };
     
     // logic
@@ -65,68 +65,68 @@ var voiceCmdr = (function () {
     this.recognizing = false;
 
     this.getRecognizing = function () { 
-        return self.recognizing; 
+        return that.recognizing; 
     }
 
     this.recognition.onstart = function () {
-        self.recognizing = true;
+        that.recognizing = true;
     };
 
     this.recognition.onresult = function (event) {
         if (typeof (event.results) === "undefined") {
-            if (self.DEBUG) console.debug("undefined result");
+            if (that.DEBUG) console.debug("undefined result");
             //recognition.onend = null;
-            self.recognition.stop();
+            that.recognition.stop();
             return;
         }
         for (var i = event.resultIndex; i < event.results.length; ++i) {
             if (event.results[i].isFinal) {
-                self.final_transcript += event.results[i][0].transcript;
+                that.final_transcript += event.results[i][0].transcript;
             }
         }
-        if (self.final_transcript !== "") {
-            self.final_transcript = self.final_transcript.toLowerCase().trim();
-            if (self.DEBUG) console.debug("received command:", self.final_transcript);
+        if (that.final_transcript !== "") {
+            that.final_transcript = that.final_transcript.toLowerCase().trim();
+            if (that.DEBUG) console.debug("received command:", that.final_transcript);
 
-            for (var command in self.commands) {
-                if (self.final_transcript.indexOf(command) === 0) {
-                    if (self.final_transcript[command.length] === undefined) {
-                        if (self.DEBUG) console.debug("calling command", command, "without params");
-                        self.commands[command]();
-                    } else if (self.final_transcript[command.length] === " ") {
-                        var param = self.final_transcript.substring(command.length, self.final_transcript.length).trim();
-                        if (self.DEBUG) console.debug("calling command", command, "with param:", param);
-                        self.commands[command](param);
+            for (var command in that.commands) {
+                if (that.final_transcript.indexOf(command) === 0) {
+                    if (that.final_transcript[command.length] === undefined) {
+                        if (that.DEBUG) console.debug("calling command", command, "without params");
+                        that.commands[command]();
+                    } else if (that.final_transcript[command.length] === " ") {
+                        var param = that.final_transcript.substring(command.length, that.final_transcript.length).trim();
+                        if (that.DEBUG) console.debug("calling command", command, "with param:", param);
+                        that.commands[command](param);
                     }
                 }
             }
 
-            self.final_transcript = "";
+            that.final_transcript = "";
         } else {
-            if (self.DEBUG) console.debug("received empty command");
+            if (that.DEBUG) console.debug("received empty command");
         }
     };
 
     this.recognition.onerror = function (event) {
-        if (self.DEBUG) console.debug("error occured", event);
+        if (that.DEBUG) console.debug("error occured", event);
     };
     
     this.recognition.onend = function (event) {
-        self.recognizing = false;
-        if (self.DEBUG) console.debug("end", event);
-        if (self.recognition.continuous) {
-            if (self.DEBUG) console.debug("restarting", self.recognition.continuous);
-            self.recognition.start();
+        that.recognizing = false;
+        if (that.DEBUG) console.debug("end", event);
+        if (that.recognition.continuous) {
+            if (that.DEBUG) console.debug("restarting", that.recognition.continuous);
+            that.recognition.start();
         }
     };
 
     return {
-        addCommand: self.addCommand,
-        removeCommand: self.removeCommand,
-        start: self.start,
-        stop: self.stop,
-        getCommand: self.getCommand,
-        debug: self.debug,
-        recognizing: self.getRecognizing
+        addCommand: that.addCommand,
+        removeCommand: that.removeCommand,
+        start: that.start,
+        stop: that.stop,
+        getCommand: that.getCommand,
+        debug: that.debug,
+        recognizing: that.getRecognizing
     };
 })();
