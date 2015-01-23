@@ -1,5 +1,5 @@
 {
-  "name": "voiceCmdr",
+  "name": "voice-cmdr",
   "version": "0.1.0",
   "description": "voiceCmdr makes it easier to add voice commands to your website",
   "main": "voiceCmdr.js",

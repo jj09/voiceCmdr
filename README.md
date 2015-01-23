@@ -7,7 +7,19 @@ voiceCmdr is a library for adding voice commands to your website. It is build on
 
 ## Getting started
 
-Check examples directory. You need to access your website through http or https protocol. Thus, you need to host your website on some server (can be localhost). 
+Install with npm:
+
+		npm install voice-cmdr
+
+Run http server with built in python module:
+
+		python -m SimpleHTTPServer 8080
+
+Then open localhost:8080 in your browser and navigate to examples directory.
+
+(*) Voice recognition works only through http protocol. That's why you have to serve static files through the server instead just open them in the browser.
+
+(**) Pages hosted on HTTPS do not need to ask repeatedly for permission, whereas HTTP hosted pages do.
 
 ## API
 
