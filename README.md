@@ -11,6 +11,10 @@ Install with npm:
 
 		npm install voice-cmdr
 
+Install with bower:
+
+		bower install voice-cmdr
+
 Run http server with built in python module:
 
 		python -m SimpleHTTPServer 8080
