@@ -60,6 +60,12 @@ Then open localhost:8080 in your browser and navigate to examples directory.
 * Turn debug mode on/off:
 
 		voiceCmdr.debug(true|false);
+
+## To Do
+
+* Add Safari support
+
+* Add setting language
 	
-## LICENSE
+## License
 [MIT](http://www.opensource.org/licenses/mit-license.php)
