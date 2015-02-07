@@ -27,30 +27,34 @@ $("#menu-help").click(function () {
 });
 
 // voice commands
-voiceCmdr.addCommand("show home", function () {
-	navigateHome();
-});
+if(voiceCmdr.isSupported()) {
+	voiceCmdr.addCommand("show home", function () {
+		navigateHome();
+	});
 
-voiceCmdr.addCommand("show", function (param) {
-	if (param === "blog") {
-		navigateBlog();
-	} else if (param === "help") {
-		navigateHelp();
-	}
-});
+	voiceCmdr.addCommand("show", function (param) {
+		if (param === "blog") {
+			navigateBlog();
+		} else if (param === "help") {
+			navigateHelp();
+		}
+	});
 
-voiceCmdr.start();
+	voiceCmdr.start();
 
-// turn debug mode on/off
-$("#toggleLogging").click(function () {
-	var turnOnLabel = "turn on",
-		turnOffLabel = "turn off";
+	// turn debug mode on/off
+	$("#toggleLogging").click(function () {
+		var turnOnLabel = "turn on",
+			turnOffLabel = "turn off";
 
-	if ($(this).text() === turnOnLabel) {
-		voiceCmdr.debug(true);
-		$(this).text(turnOffLabel);
-	} else {
-		voiceCmdr.debug(false);
-		$(this).text(turnOnLabel);
-	}
-});
+		if ($(this).text() === turnOnLabel) {
+			voiceCmdr.debug(true);
+			$(this).text(turnOffLabel);
+		} else {
+			voiceCmdr.debug(false);
+			$(this).text(turnOnLabel);
+		}
+	});
+} else {
+	console.info("Sorry, your browser does not support the Web Speech API :(")
+}
