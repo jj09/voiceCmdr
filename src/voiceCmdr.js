@@ -1,5 +1,5 @@
 /*!
- * voiceCmdr JavaScript library v0.1.1
+ * voiceCmdr JavaScript library v0.1.2
  * (c) Jakub Jedryszek - http://jj09.net/
  * License: MIT (http://www.opensource.org/licenses/mit-license.php)
  */

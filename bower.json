@@ -1,6 +1,6 @@
 {
   "name": "voice-cmdr",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "homepage": "https://github.com/jj09/voiceCmdr",
   "authors": [
     "Jakub Jedryszek <jakub.jedryszek@gmail.com>"
@@ -25,6 +25,9 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "src",
+    "gulpfile.js",
+    "package.json"
   ]
 }
