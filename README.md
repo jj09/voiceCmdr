@@ -1,4 +1,7 @@
 # voiceCmdr
+
+[![Build Status](https://travis-ci.org/jj09/voiceCmdr.svg?branch=master)](https://travis-ci.org/jj09/voiceCmdr)
+
 voiceCmdr is a library for adding voice commands to your website. It is build on top of Webkit Speech API.
 
 ## Browser support
