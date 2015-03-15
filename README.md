@@ -67,7 +67,9 @@ Then open localhost:8080 in your browser and navigate to examples directory.
 ## To Do
 
 * Add setting language
-* Tests (hard without heavy mocking)
+* Tests (???):
+	* in browser with karma (???)
+	* Mocha+Chai+Sinon with mocking window + webkitSpeechRecognition (???)
 	
 ## License
 [MIT](http://www.opensource.org/licenses/mit-license.php)
