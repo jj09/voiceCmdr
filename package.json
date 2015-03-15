@@ -4,7 +4,7 @@
   "description": "voiceCmdr makes it easier to add voice commands to your website",
   "main": "voiceCmdr.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "gulp lint"
   },
   "repository": {
     "type": "git",
@@ -24,5 +24,11 @@
   "bugs": {
     "url": "https://github.com/jj09/voiceCmdr/issues"
   },
-  "homepage": "https://github.com/jj09/voiceCmdr"
+  "homepage": "https://github.com/jj09/voiceCmdr",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-jshint": "^1.9.2",
+    "gulp-uglify": "^1.1.0",
+    "jshint-stylish": "^1.0.1"
+  }
 }

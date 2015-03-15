@@ -1,0 +1,18 @@
+{
+	"bitwise": true,
+	"browser": true,
+	"camelcase": true,
+	"curly": true,
+	"eqeqeq": true,
+	"globals": {
+		"webkitSpeechRecognition": false
+	},
+	"indent": 4,
+	"latedef": true,
+	"node": true,
+	"quotmark": "single",
+	"undef": true,
+	"unused": false,
+	"strict": true,
+	"white": true
+}

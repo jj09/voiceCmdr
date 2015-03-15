@@ -63,8 +63,6 @@ Then open localhost:8080 in your browser and navigate to examples directory.
 
 ## To Do
 
-* Add Safari support
-
 * Add setting language
 	
 ## License
