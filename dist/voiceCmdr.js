@@ -1,1 +1,181 @@
-var voiceCmdr=function(){"use strict";var n=this;return this.recognition=window.webkitSpeechRecognition&&new webkitSpeechRecognition,this.isSupported=function(){return!!n.recognition},this.isSupported()&&(this.addCommand=function(i,o){n.DEBUG&&console.debug("added command:",i),n.commands[i]=o},this.removeCommand=function(i){return n.DEBUG&&console.debug("removed command:",i),n.commands[i]?(delete n.commands[i],!0):!1},this.start=function(){n.recognition.continuous=!0,n.recognition.start(),n.DEBUG&&console.debug("started listening")},this.stop=function(){n.recognition.continuous=!1,n.recognition.stop(),n.DEBUG&&console.debug("stopped listening")},this.getCommand=function(){n.recognition.continuous=!1,n.recognition.start(),n.DEBUG&&console.debug("listening for single command")},this.debug=function(i){n.DEBUG=!!i},this.finalTranscript="",this.commands={},this.DEBUG=!1,this.recognizing=!1,this.getRecognizing=function(){return n.recognizing},this.recognition.onstart=function(){n.recognizing=!0},this.recognition.onresult=function(i){if("undefined"==typeof i.results)return n.DEBUG&&console.debug("undefined result"),void n.recognition.stop();for(var o=i.resultIndex;o<i.results.length;++o)i.results[o].isFinal&&(n.finalTranscript+=i.results[o][0].transcript);if(""!==n.finalTranscript){n.finalTranscript=n.finalTranscript.toLowerCase().trim(),n.DEBUG&&console.debug("received command:",n.finalTranscript);for(var t in n.commands)if(0===n.finalTranscript.indexOf(t))if(void 0===n.finalTranscript[t.length])n.DEBUG&&console.debug("calling command",t,"without params"),n.commands[t]();else if(" "===n.finalTranscript[t.length]){var e=n.finalTranscript.substring(t.length,n.finalTranscript.length).trim();n.DEBUG&&console.debug("calling command",t,"with param:",e),n.commands[t](e)}n.finalTranscript=""}else n.DEBUG&&console.debug("received empty command")},this.recognition.onerror=function(i){n.DEBUG&&console.debug("error occured",i)},this.recognition.onend=function(i){n.recognizing=!1,n.DEBUG&&console.debug("end",i),n.recognition.continuous&&(n.DEBUG&&console.debug("restarting",n.recognition.continuous),n.recognition.start())}),{isSupported:n.isSupported,addCommand:n.addCommand,removeCommand:n.removeCommand,start:n.start,stop:n.stop,getCommand:n.getCommand,debug:n.debug,recognizing:n.getRecognizing}}();
+/*!
+ * voiceCmdr JavaScript library v0.1.2
+ * (c) Jakub Jedryszek - http://jj09.net/
+ * License: MIT (http://www.opensource.org/licenses/mit-license.php)
+ */
+
+var voiceCmdr = (function () {
+    'use strict';
+
+    var that = this;
+
+    this.recognition = window.webkitSpeechRecognition && new webkitSpeechRecognition();
+
+    this.isSupported = function () {
+        return !!that.recognition;
+    };
+
+    if (this.isSupported()) {
+        // API
+
+        // register command, and its callback function
+        this.addCommand = function (command, f) {
+            if (that.DEBUG) {
+                console.debug('added command:', command);
+            }
+
+            that.commands[command] = f;
+        };
+
+        // remove command
+        // @return if command exists: true
+        //         else: return false
+        this.removeCommand = function (command) {
+            if (that.DEBUG) {
+                console.debug('removed command:', command);
+            }
+
+            if (that.commands[command]) {
+                delete that.commands[command];
+                return true;
+            }
+
+            return false;
+        };
+
+        // start listening for commands
+        this.start = function () {
+            that.recognition.continuous = true;
+            that.recognition.start();
+
+            if (that.DEBUG) {
+                console.debug('started listening');
+            }
+        };
+
+        // stop listening for commands
+        this.stop = function() {
+            that.recognition.continuous = false;
+            that.recognition.stop();
+
+            if (that.DEBUG) {
+                console.debug('stopped listening');
+            }
+        };
+
+        // listening for single command
+        this.getCommand = function() {
+            that.recognition.continuous = false;
+            that.recognition.start();
+
+            if (that.DEBUG) {
+                console.debug('listening for single command');
+            }
+        };
+
+        this.debug = function(mode) {
+            that.DEBUG = !!mode;
+        };
+        
+        
+        // logic
+
+        this.finalTranscript = '';
+        this.commands = {};
+        this.DEBUG = false;
+        this.recognizing = false;
+
+        this.getRecognizing = function () { 
+            return that.recognizing; 
+        };
+
+    
+        this.recognition.onstart = function () {
+            that.recognizing = true;
+        };
+
+        this.recognition.onresult = function (event) {
+            if (typeof (event.results) === 'undefined') {
+                if (that.DEBUG) {
+                    console.debug('undefined result');
+                }
+                
+                that.recognition.stop();
+                
+                return;
+            }
+
+            for (var i = event.resultIndex; i < event.results.length; ++i) {
+                if (event.results[i].isFinal) {
+                    that.finalTranscript += event.results[i][0].transcript;
+                }
+            }
+
+            if (that.finalTranscript !== '') {
+                that.finalTranscript = that.finalTranscript.toLowerCase().trim();
+
+                if (that.DEBUG) {
+                    console.debug('received command:', that.finalTranscript);
+                }
+
+                for (var command in that.commands) {
+                    if (that.finalTranscript.indexOf(command) === 0) {
+                        if (that.finalTranscript[command.length] === undefined) {
+                            if (that.DEBUG) {
+                                console.debug('calling command', command, 'without params');
+                            }
+                            
+                            that.commands[command]();
+                        } else if (that.finalTranscript[command.length] === ' ') {
+                            var param = that.finalTranscript.substring(command.length, that.finalTranscript.length).trim();
+                            
+                            if (that.DEBUG) {
+                                console.debug('calling command', command, 'with param:', param);
+                            }
+                            
+                            that.commands[command](param);
+                        }
+                    }
+                }
+
+                that.finalTranscript = '';
+            } else {
+                if (that.DEBUG) {
+                    console.debug('received empty command');
+                }
+            }
+        };
+
+        this.recognition.onerror = function (event) {
+            if (that.DEBUG) {
+                console.debug('error occured', event);
+            }
+        };
+        
+        this.recognition.onend = function (event) {
+            that.recognizing = false;
+            if (that.DEBUG) {
+                console.debug('end', event);
+            }
+
+            if (that.recognition.continuous) {
+                if (that.DEBUG) {
+                    console.debug('restarting', that.recognition.continuous);
+                }
+                
+                that.recognition.start();
+            }
+        };
+    }
+
+    return {
+        isSupported: that.isSupported,
+        addCommand: that.addCommand,
+        removeCommand: that.removeCommand,
+        start: that.start,
+        stop: that.stop,
+        getCommand: that.getCommand,
+        debug: that.debug,
+        recognizing: that.getRecognizing
+    };
+})();
