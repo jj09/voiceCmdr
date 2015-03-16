@@ -66,6 +66,7 @@ Then open localhost:8080 in your browser and navigate to examples directory.
 
 ## To Do
 
+* Stop restarting after 5 tries (if user set deny the restarting will work infinitely)
 * Add setting language
 * Tests (???):
 	* in browser with karma (???)

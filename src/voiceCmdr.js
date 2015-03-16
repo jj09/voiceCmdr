@@ -1,12 +1,10 @@
 /*!
- * voiceCmdr JavaScript library v0.1.2
+ * voiceCmdr JavaScript library v0.1.3
  * (c) Jakub Jedryszek - http://jj09.net/
  * License: MIT (http://www.opensource.org/licenses/mit-license.php)
  */
 
 var voiceCmdr = (function () {
-    'use strict';
-
     var that = this;
 
     this.recognition = window.webkitSpeechRecognition && new webkitSpeechRecognition();
@@ -85,7 +83,7 @@ var voiceCmdr = (function () {
         this.DEBUG = false;
         this.recognizing = false;
 
-        this.getRecognizing = function () { 
+        this.isRecognizing = function () { 
             return that.recognizing; 
         };
 
@@ -122,7 +120,7 @@ var voiceCmdr = (function () {
                     if (that.finalTranscript.indexOf(command) === 0) {
                         if (that.finalTranscript[command.length] === undefined) {
                             if (that.DEBUG) {
-                                console.debug('calling command', command, 'without params');
+                                console.debug('calling command', command);
                             }
                             
                             that.commands[command]();
@@ -176,6 +174,6 @@ var voiceCmdr = (function () {
         stop: that.stop,
         getCommand: that.getCommand,
         debug: that.debug,
-        recognizing: that.getRecognizing
+        isRecognizing: that.isRecognizing
     };
 })();

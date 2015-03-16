@@ -28,11 +28,11 @@ $("#menu-help").click(function () {
 
 // voice commands
 if(voiceCmdr.isSupported()) {
-	voiceCmdr.addCommand("show home", function () {
+	voiceCmdr.addCommand("go home", function () {
 		navigateHome();
 	});
 
-	voiceCmdr.addCommand("show", function (param) {
+	voiceCmdr.addCommand("go", function (param) {
 		if (param === "blog") {
 			navigateBlog();
 		} else if (param === "help") {
