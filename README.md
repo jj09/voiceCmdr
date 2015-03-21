@@ -12,15 +12,15 @@ voiceCmdr is a library for adding voice commands to your website. It is build on
 
 Install with npm:
 
-		npm install voice-cmdr
+	npm install voice-cmdr
 
 Install with bower:
 
-		bower install voice-cmdr
+	bower install voice-cmdr
 
 Run http server with built in python module:
 
-		python -m SimpleHTTPServer 8080
+	python -m SimpleHTTPServer 8080
 
 Then open localhost:8080 in your browser and navigate to examples directory.
 
