@@ -44,7 +44,7 @@ var voiceCmdr = (function () {
         // start listening for commands
         this.start = function () {
             that.recognition.continuous = true;
-            that.recognition.start();
+            that.recognition.start();   // async call
 
             if (that.DEBUG) {
                 console.debug('started listening');
@@ -54,7 +54,7 @@ var voiceCmdr = (function () {
         // stop listening for commands
         this.stop = function() {
             that.recognition.continuous = false;
-            that.recognition.stop();
+            that.recognition.stop();    // async call
 
             if (that.DEBUG) {
                 console.debug('stopped listening');
@@ -63,12 +63,24 @@ var voiceCmdr = (function () {
 
         // listening for single command
         this.getCommand = function() {
-            that.recognition.continuous = false;
-            that.recognition.start();
+            var timeout = 1;
 
-            if (that.DEBUG) {
-                console.debug('listening for single command');
+            if(that.isRecognizing()) {
+                that.stop();
+
+                // timeout is needed to allow async stop() function to execute
+                // otherwise - start will be called before previous listening were aborted and error will occur
+                timeout = 1000;
             }
+
+            setTimeout(function () {
+                that.recognition.continuous = false;
+                that.recognition.start();
+
+                if (that.DEBUG) {
+                    console.debug('listening for single command');
+                }            
+            }, timeout);
         };
 
         this.debug = function(mode) {
@@ -90,6 +102,10 @@ var voiceCmdr = (function () {
     
         this.recognition.onstart = function () {
             that.recognizing = true;
+
+            if (that.DEBUG) {
+                console.debug('start', event);
+            }
         };
 
         this.recognition.onresult = function (event) {
