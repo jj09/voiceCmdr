@@ -70,6 +70,12 @@ Then open localhost:8080 in your browser and navigate to examples directory.
 * Stop restarting after 5 tries (if user set deny the restarting will work infinitely)
 * Add setting language
 * Tests (???):
+	* addCommand
+		* Works
+		* Can overwrite existing without error
+	* removeCommand
+		* Remove existing returns true
+		* Remove non-existing returns false
 	* in browser with karma (???)
 	* Mocha+Chai+Sinon with mocking window + webkitSpeechRecognition (???)
 	
