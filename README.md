@@ -77,7 +77,7 @@ Then open localhost:8080 in your browser and navigate to examples directory.
 		* Remove existing returns true
 		* Remove non-existing returns false
 	* in browser with karma (???)
-	* Mocha+Chai+Sinon with mocking window + webkitSpeechRecognition (???)
+	* Jasmine vs Mocha+Chai+Sinon with mocking window + webkitSpeechRecognition (???)
 	
 ## License
 [MIT](http://www.opensource.org/licenses/mit-license.php)

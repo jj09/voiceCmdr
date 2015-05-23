@@ -5,36 +5,38 @@
  */
 
 var voiceCmdr = (function () {
-    var that = this;
+    'use strict';
 
-    this.recognition = window.webkitSpeechRecognition && new webkitSpeechRecognition();
+    var cmdr = {};
 
-    this.isSupported = function () {
-        return !!that.recognition;
+    cmdr.recognition = window.webkitSpeechRecognition && new webkitSpeechRecognition();
+
+    cmdr.isSupported = function () {
+        return !!cmdr.recognition;
     };
 
-    if (this.isSupported()) {
+    if (cmdr.isSupported()) {
         // API
 
         // register command, and its callback function
-        this.addCommand = function (command, f) {
-            if (that.DEBUG) {
+        cmdr.addCommand = function (command, f) {
+            if (cmdr.DEBUG) {
                 console.debug('added command:', command);
             }
 
-            that.commands[command] = f;
+            cmdr.commands[command] = f;
         };
 
         // remove command
         // @return if command exists: true
         //         else: return false
-        this.removeCommand = function (command) {
-            if (that.DEBUG) {
+        cmdr.removeCommand = function (command) {
+            if (cmdr.DEBUG) {
                 console.debug('removed command:', command);
             }
 
-            if (that.commands[command]) {
-                delete that.commands[command];
+            if (cmdr.commands[command]) {
+                delete cmdr.commands[command];
                 return true;
             }
 
@@ -42,138 +44,154 @@ var voiceCmdr = (function () {
         };
 
         // start listening for commands
-        this.start = function () {
-            that.recognition.continuous = true;
-            that.recognition.start();
+        cmdr.start = function () {
+            cmdr.recognition.continuous = true;
+            cmdr.recognition.start();   // async call
 
-            if (that.DEBUG) {
+            if (cmdr.DEBUG) {
                 console.debug('started listening');
             }
         };
 
         // stop listening for commands
-        this.stop = function() {
-            that.recognition.continuous = false;
-            that.recognition.stop();
+        cmdr.stop = function() {
+            cmdr.recognition.continuous = false;
+            cmdr.recognition.stop();    // async call
 
-            if (that.DEBUG) {
+            if (cmdr.DEBUG) {
                 console.debug('stopped listening');
             }
         };
 
         // listening for single command
-        this.getCommand = function() {
-            that.recognition.continuous = false;
-            that.recognition.start();
+        cmdr.getCommand = function() {
+            var timeout = 1;
 
-            if (that.DEBUG) {
-                console.debug('listening for single command');
+            if(cmdr.isRecognizing()) {
+                cmdr.stop();
+
+                // timeout is needed to allow async stop() function to execute
+                // otherwise - start will be called before previous listening were aborted and error will occur
+                timeout = 1000;
             }
+
+            setTimeout(function () {
+                cmdr.recognition.continuous = false;
+                cmdr.recognition.start();
+
+                if (cmdr.DEBUG) {
+                    console.debug('listening for single command');
+                }            
+            }, timeout);
         };
 
-        this.debug = function(mode) {
-            that.DEBUG = !!mode;
+        cmdr.debug = function(mode) {
+            cmdr.DEBUG = !!mode;
         };
         
         
         // logic
 
-        this.finalTranscript = '';
-        this.commands = {};
-        this.DEBUG = false;
-        this.recognizing = false;
+        cmdr.finalTranscript = '';
+        cmdr.commands = {};
+        cmdr.DEBUG = false;
+        cmdr.recognizing = false;
 
-        this.isRecognizing = function () { 
-            return that.recognizing; 
+        cmdr.isRecognizing = function () { 
+            return cmdr.recognizing; 
         };
 
     
-        this.recognition.onstart = function () {
-            that.recognizing = true;
+        cmdr.recognition.onstart = function () {
+            cmdr.recognizing = true;
+
+            if (cmdr.DEBUG) {
+                console.debug('start', event);
+            }
         };
 
-        this.recognition.onresult = function (event) {
+        cmdr.recognition.onresult = function (event) {
             if (typeof (event.results) === 'undefined') {
-                if (that.DEBUG) {
+                if (cmdr.DEBUG) {
                     console.debug('undefined result');
                 }
                 
-                that.recognition.stop();
+                cmdr.recognition.stop();
                 
                 return;
             }
 
             for (var i = event.resultIndex; i < event.results.length; ++i) {
                 if (event.results[i].isFinal) {
-                    that.finalTranscript += event.results[i][0].transcript;
+                    cmdr.finalTranscript += event.results[i][0].transcript;
                 }
             }
 
-            if (that.finalTranscript !== '') {
-                that.finalTranscript = that.finalTranscript.toLowerCase().trim();
+            if (cmdr.finalTranscript !== '') {
+                cmdr.finalTranscript = cmdr.finalTranscript.toLowerCase().trim();
 
-                if (that.DEBUG) {
-                    console.debug('received command:', that.finalTranscript);
+                if (cmdr.DEBUG) {
+                    console.debug('received command:', cmdr.finalTranscript);
                 }
 
-                for (var command in that.commands) {
-                    if (that.finalTranscript.indexOf(command) === 0) {
-                        if (that.finalTranscript[command.length] === undefined) {
-                            if (that.DEBUG) {
+                for (var command in cmdr.commands) {
+                    if (cmdr.finalTranscript.indexOf(command) === 0) {
+                        if (cmdr.finalTranscript[command.length] === undefined) {
+                            if (cmdr.DEBUG) {
                                 console.debug('calling command', command);
                             }
                             
-                            that.commands[command]();
-                        } else if (that.finalTranscript[command.length] === ' ') {
-                            var param = that.finalTranscript.substring(command.length, that.finalTranscript.length).trim();
+                            cmdr.commands[command]();
+                        } else if (cmdr.finalTranscript[command.length] === ' ') {
+                            var param = cmdr.finalTranscript.substring(command.length, cmdr.finalTranscript.length).trim();
                             
-                            if (that.DEBUG) {
+                            if (cmdr.DEBUG) {
                                 console.debug('calling command', command, 'with param:', param);
                             }
                             
-                            that.commands[command](param);
+                            cmdr.commands[command](param);
                         }
                     }
                 }
 
-                that.finalTranscript = '';
+                cmdr.finalTranscript = '';
             } else {
-                if (that.DEBUG) {
+                if (cmdr.DEBUG) {
                     console.debug('received empty command');
                 }
             }
         };
 
-        this.recognition.onerror = function (event) {
-            if (that.DEBUG) {
+        cmdr.recognition.onerror = function (event) {
+            if (cmdr.DEBUG) {
                 console.debug('error occured', event);
             }
         };
         
-        this.recognition.onend = function (event) {
-            that.recognizing = false;
-            if (that.DEBUG) {
+        cmdr.recognition.onend = function (event) {
+            cmdr.recognizing = false;
+            if (cmdr.DEBUG) {
                 console.debug('end', event);
             }
 
-            if (that.recognition.continuous) {
-                if (that.DEBUG) {
-                    console.debug('restarting', that.recognition.continuous);
+            if (cmdr.recognition.continuous) {
+                if (cmdr.DEBUG) {
+                    console.debug('restarting', cmdr.recognition.continuous);
                 }
                 
-                that.recognition.start();
+                cmdr.recognition.start();
             }
         };
     }
 
     return {
-        isSupported: that.isSupported,
-        addCommand: that.addCommand,
-        removeCommand: that.removeCommand,
-        start: that.start,
-        stop: that.stop,
-        getCommand: that.getCommand,
-        debug: that.debug,
-        isRecognizing: that.isRecognizing
+        isSupported: cmdr.isSupported,
+        addCommand: cmdr.addCommand,
+        removeCommand: cmdr.removeCommand,
+        start: cmdr.start,
+        stop: cmdr.stop,
+        getCommand: cmdr.getCommand,
+        debug: cmdr.debug,
+        isRecognizing: cmdr.isRecognizing
     };
 })();
