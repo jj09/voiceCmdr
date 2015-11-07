@@ -65,6 +65,17 @@ Then open localhost:8080 in your browser and navigate to examples directory.
 
 		voiceCmdr.debug(true|false);
 
+## Demo
+
+[www.bookslib.azurewebsites.net](http://bookslib.azurewebsites.net)
+
+Available commands:
+
+	books
+	favorites
+	top 10
+	search [string]
+
 ## To Do
 
 * Stop restarting after 5 tries (if user set deny the restarting will work infinitely)
