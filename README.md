@@ -19,9 +19,9 @@ Install with bower:
 
 	bower install voice-cmdr
 
-Run http server with built in python module:
+Run http server (can be installed with `npm install -g http-server`):
 
-	python -m SimpleHTTPServer 8080
+	http-server
 
 Then open localhost:8080 in your browser and navigate to examples directory.
 
@@ -78,6 +78,7 @@ Available commands:
 
 ## To Do
 
+* lowercase commands
 * Stop restarting after 5 tries (if user set deny the restarting will work infinitely)
 * Add setting language
 * Tests (???):
