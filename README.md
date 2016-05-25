@@ -25,7 +25,7 @@ Run http server (can be installed with `npm install -g http-server`):
 
 Then open localhost:8080 in your browser and navigate to examples directory.
 
-(*) Voice recognition works only through http protocol. That's why you have to serve static files through the server instead just open them in the browser.
+(*) Voice recognition works only through http protocol. That's why you have to serve static files through the server instead of just opening them in the browser.
 
 (**) Pages hosted on HTTPS do not need to ask repeatedly for permission, whereas HTTP hosted pages do.
 
