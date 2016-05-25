@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>voiceCmdr by jj09</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>voiceCmdr</h1>
+        <h2>voice commands for you website</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/jj09/voiceCmdr/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/jj09/voiceCmdr/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/jj09/voiceCmdr" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a id="voicecmdr" class="anchor" href="#voicecmdr" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>voiceCmdr</h1>
+
+<p>voiceCmdr is a library for adding voice commands to your website. It is build on top of WebSpeech API.</p>
+
+<h2>
+<a id="browser-support" class="anchor" href="#browser-support" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Browser support</h2>
+
+<ul>
+<li>Google Chrome 31+</li>
+</ul>
+
+<h2>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Getting started</h2>
+
+<p>Install with npm:</p>
+
+<pre><code>npm install voice-cmdr
+</code></pre>
+
+<p>Install with bower:</p>
+
+<pre><code>bower install voice-cmdr
+</code></pre>
+
+<p>Run http server (can be installed with <code>npm install -g http-server</code>):</p>
+
+<pre><code>http-server
+</code></pre>
+
+<p>Then open localhost:8080 in your browser and navigate to examples directory.</p>
+
+<p>(*) Voice recognition works only through http protocol. That's why you have to serve static files through the server instead just open them in the browser.</p>
+
+<p>(**) Pages hosted on HTTPS do not need to ask repeatedly for permission, whereas HTTP hosted pages do.</p>
+
+<h2>
+<a id="api" class="anchor" href="#api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>API</h2>
+
+<ul>
+<li>
+<p>Add command:</p>
+
+<pre><code>voiceCmdr.addCommand("command", callbackFunction);
+</code></pre>
+
+<p>Example:</p>
+
+<pre><code>voiceCmdr.addCommand("home", function () {
+    // navigate to home page
+});
+
+voiceCmdr.addCommand("search", function (param) {
+    console.log("Searching for:", param);
+}); 
+</code></pre>
+</li>
+<li>
+<p>Remove command:</p>
+
+<pre><code>voiceCmdr.removeCommand("command");
+</code></pre>
+</li>
+<li>
+<p>Start listening (continuously):</p>
+
+<pre><code>voiceCmdr.start();
+</code></pre>
+</li>
+<li>
+<p>Stop listening:</p>
+
+<pre><code>voiceCmdr.stop();
+</code></pre>
+</li>
+<li>
+<p>Get single command:</p>
+
+<pre><code>voiceCmdr.getCommand();
+</code></pre>
+</li>
+<li>
+<p>Turn debug mode on/off:</p>
+
+<pre><code>voiceCmdr.debug(true|false);
+</code></pre>
+</li>
+</ul>
+
+<h2>
+<a id="demo" class="anchor" href="#demo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Demo</h2>
+
+<p><a href="http://bookslib.azurewebsites.net">www.bookslib.azurewebsites.net</a></p>
+
+<p>Available commands:</p>
+
+<pre><code>books
+favorites
+top 10
+search [string]
+</code></pre>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
