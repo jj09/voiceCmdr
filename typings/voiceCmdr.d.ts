@@ -1,6 +1,6 @@
 interface VoiceCmdr {
     isSupported(): boolean;
-    addCommand(command: string, f: () => void): void;
+    addCommand(command: string, callback: () => void): void;
     removeCommand(command: string): boolean;
     start(): void,
     stop(): void,
